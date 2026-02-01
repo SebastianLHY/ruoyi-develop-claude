@@ -351,7 +351,7 @@
 - **设计产出**：
 	1. **数据库设计方案**
 		- 规划涉及的数据库表结构（表名、字段类型、长度、索引、关联关系）
-		- 定义表名前缀（根据模块名，如：`sys_`、`sport_`）
+		- 定义表名前缀biz_
 		- 确定主键策略（雪花ID/自增ID）
 		- 规划索引策略（普通索引/唯一索引/联合索引）
 		- 📝 **注意**：此步骤仅输出设计方案（文档形式），实际DDL SQL脚本在步骤5生成
@@ -375,15 +375,15 @@
 				检测到以下现有模块：
 				1. ruoyi-system (系统管理模块)
 				2. ruoyi-demo (示例演示模块)
-				3. [新建模块] (输入新模块名，格式：ruoyi-<业务名>)
+				3. [新建模块] ruoyi-business
 				
 				请选择代码生成位置 [1/2/3]:
 				```
 			4. **情况 A：选择现有模块**
-				- 记录模块路径：`ruoyi-modules/<模块名>`
-				- 记录包路径：`org.dromara.<模块名>`
+				- 记录模块路径：`ruoyi-modules/ruoyi-business
+				- 记录包路径：`org.dromara.business`
 			5. **情况 B：新建模块**
-				- 确认模块命名（格式：`ruoyi-<业务名>`，如：`ruoyi-order`、`ruoyi-sport`）
+				- 确认模块命名ruoyi-business
 				- 规划标准Maven模块目录结构
 				- 记录到设计文档中，在步骤6时创建
 - **⚠️ 重要**: 模块归属确定后，会影响步骤4文档组织、步骤5表名前缀、步骤6代码路径
@@ -528,15 +528,15 @@
 		- 包含字段定义、数据类型、长度、默认值、注释
 		- 包含主键、索引、唯一约束定义
 		- 包含6个标准审计字段（create_time、create_by等）
-		- 脚本路径：`sql/[模块名]/[表名].sql`
+		- 脚本路径：`./claud/sql/business/[表名].sql`
 	2. **数据字典SQL（DML）**
 		- 插入字典类型数据（`sys_dict_type`）
 		- 插入字典数据（`sys_dict_data`）
-		- 脚本路径：`sql/[模块名]/dict_data.sql`
+		- 脚本路径：`./claude/sql/business/dict_data.sql`
 	3. **菜单权限SQL（DML）**
 		- 插入菜单数据（`sys_menu`）
 		- 配置权限标识（如：`system:user:list`）
-		- 脚本路径：`sql/[模块名]/menu_data.sql`
+		- 脚本路径：`./claude/sql/business/menu_data.sql`
 - **代码规范**：
 	- 表名使用小写下划线命名（snake_case）
 	- 存储引擎使用 InnoDB
@@ -546,7 +546,7 @@
 - **执行验证**：
 	```bash
 	# 1. 在数据库中执行SQL脚本
-	mysql -u root -p < sql/[模块名]/[表名].sql
+	mysql -u root -p < sql/business/[表名].sql
 	
 	# 2. 验证表是否创建成功
 	SHOW TABLES LIKE '[表名]';
@@ -560,7 +560,7 @@
 	```bash
 	# 提交SQL脚本到Git
 	git add sql/
-	git commit -m "feat: 添加[模块名]数据库表结构"
+	git commit -m "feat: 添加business数据库表结构"
 	```
 - **➡️ 激活技能：`database-ops`**
 - **⚠️ 失败处理**：
@@ -1235,7 +1235,7 @@ AI: 🔍 正在分析参考代码...
 请确认各模块方案，可调整：
 - 直接回复"确认"接受所有推荐
 - 回复"调整"可修改某个模块的方案
-- 回复"模块名+方案"可单独调整（如：用户 B）
+- 回复"business模块+方案"可单独调整（如：用户 B）
 
 步骤4: 按模块顺序执行
 │
@@ -1419,13 +1419,13 @@ Token成本:
 			📋 代码生成器统一配置参数（请在若依后台配置）：
 			
 			基础信息：
-			- 表名: [从步骤2获取，如：sys_user、sport_record]
+			- 表名: Biz_[业务名]
 			- 表描述: [功能描述]
 			- 实体类名: [驼峰命名，如：User、SportRecord]
 			
 			生成路径：
-			- 模块名: [步骤2确定的模块，如：system、sport]
-			- 包路径: com.ruoyi.[模块名]
+			- 模块名: business
+			- 包路径: org.dromara.business
 			- 业务名: [表名去除前缀，如：user、record]
 			- 功能名: [中文描述，如：用户管理、运动记录]
 			
@@ -1477,17 +1477,17 @@ Token成本:
 			🔍 正在验证后端+前端生成结果，请提供以下信息：
 			
 			【后端代码验证】
-			1. 后端包路径是否为: com.ruoyi.[模块名]
+			1. 后端包路径是否为: org.dromara.business
 			2. 是否生成了以下后端文件：
-			   - Entity: [模块名]/domain/[实体类名].java
-			   - Mapper: [模块名]/mapper/[实体类名]Mapper.java
-			   - Service: [模块名]/service/I[实体类名]Service.java
-			   - Controller: [模块名]/controller/[实体类名]Controller.java
+			   - Entity: business/domain/[实体类名].java
+			   - Mapper: business/mapper/[实体类名]Mapper.java
+			   - Service: business/service/I[实体类名]Service.java
+			   - Controller: business/controller/[实体类名]Controller.java
 			
 			【前端代码验证】
 			3. 是否生成了以下前端文件：
-			   - API定义: plus-ui/src/api/[模块名]/[业务名].ts
-			   - 页面组件: plus-ui/src/views/[模块名]/[业务名]/index.vue
+			   - API定义: plus-ui/src/api/business/[业务名].ts
+			   - 页面组件: plus-ui/src/views/business[业务名]/index.vue
 			   - 路由配置: (通常已自动注册)
 			
 			【一致性验证】
@@ -1686,9 +1686,14 @@ Token成本:
 	- **分支B：AI直接生成代码**
 		- **情况 B1：选择现有模块**
 			- 直接在选定模块下生成代码
-			- 路径：`ruoyi-modules/<模块名>/src/main/java/org/dromara/<模块名>/`
+			- 路径：`ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/`
 		
 		- **情况 B2：新建模块**
+			- **前置检查（强制执行）**：
+				- 检查模块 pom.xml 是否存在
+				- 如不存在，立即执行步骤1-3创建完整模块结构
+				- 验证父 pom.xml 是否已注册该模块
+			
 			- **步骤1：创建标准Maven模块目录结构**
 				```
 				ruoyi-modules/ruoyi-<业务名>/
@@ -1703,9 +1708,9 @@ Token成本:
 				        └── mapper/      (MyBatis XML)
 				```
 			
-			- **步骤2：生成模块 pom.xml 配置文件**
+			- **步骤2：生成模块 pom.xml 配置文件（必需）**
 				
-				**AI动作**：为新模块生成标准 pom.xml
+				使用 Write 工具创建 `ruoyi-modules/ruoyi-<业务名>/pom.xml`
 				
 				```xml
 				<?xml version="1.0" encoding="UTF-8"?>
@@ -1746,7 +1751,7 @@ Token成本:
 				        <!-- Redis缓存（如需缓存功能） -->
 				        <!--
 				        <dependency>
-				            <groupId>com.ruoyi</groupId>
+				            <groupId>org.dromara</groupId>
 				            <artifactId>ruoyi-common-redis</artifactId>
 				        </dependency>
 				        -->
@@ -1754,7 +1759,7 @@ Token成本:
 				        <!-- Excel导入导出（如需Excel功能） -->
 				        <!--
 				        <dependency>
-				            <groupId>com.ruoyi</groupId>
+				            <groupId>org.dromara</groupId>
 				            <artifactId>ruoyi-common-excel</artifactId>
 				        </dependency>
 				        -->
@@ -1762,7 +1767,7 @@ Token成本:
 				        <!-- OSS对象存储（如需文件上传功能） -->
 				        <!--
 				        <dependency>
-				            <groupId>com.ruoyi</groupId>
+				            <groupId>org.dromara</groupId>
 				            <artifactId>ruoyi-common-oss</artifactId>
 				        </dependency>
 				        -->
@@ -1770,7 +1775,7 @@ Token成本:
 				        <!-- 翻译模块（如需字典翻译功能） -->
 				        <!--
 				        <dependency>
-				            <groupId>com.ruoyi</groupId>
+				            <groupId>org.dromara</groupId>
 				            <artifactId>ruoyi-common-translation</artifactId>
 				        </dependency>
 				        -->
@@ -1778,7 +1783,7 @@ Token成本:
 				        <!-- 邮件发送（如需邮件功能） -->
 				        <!--
 				        <dependency>
-				            <groupId>com.ruoyi</groupId>
+				            <groupId>org.dromara</groupId>
 				            <artifactId>ruoyi-common-mail</artifactId>
 				        </dependency>
 				        -->
@@ -1786,7 +1791,7 @@ Token成本:
 				        <!-- 短信发送（如需短信功能） -->
 				        <!--
 				        <dependency>
-				            <groupId>com.ruoyi</groupId>
+				            <groupId>org.dromara</groupId>
 				            <artifactId>ruoyi-common-sms</artifactId>
 				        </dependency>
 				        -->
@@ -1805,9 +1810,9 @@ Token成本:
 				| 发送邮件 | ruoyi-common-mail | 邮件通知功能 |
 				| 发送短信 | ruoyi-common-sms | 短信验证码/通知 |
 			
-			- **步骤3：更新父工程 pom.xml**
+			- **步骤3：更新父工程 pom.xml（必需）**
 				
-				**AI动作**：在 `ruoyi-modules/pom.xml` 的 `<modules>` 中添加新模块引用
+				在 `ruoyi-modules/pom.xml` 的 `<modules>` 中添加新模块引用
 				
 				```xml
 				<modules>
@@ -1819,14 +1824,16 @@ Token成本:
 				</modules>
 				```
 			
-			- **步骤4：验证模块配置**
+			- **步骤4：验证模块配置（可选）**
 				```bash
-				# 1. 验证Maven配置是否正确
 				mvn clean compile
-				
-				# 2. 检查模块是否被正确识别
-				mvn dependency:tree -pl ruoyi-modules/ruoyi-<业务名>
 				```
+	
+	- **模块完整性自检**：
+		- 确认 `ruoyi-modules/ruoyi-<业务名>/pom.xml` 已创建
+		- 确认父 pom.xml 已注册模块
+		- 如有缺失，立即补充创建
+
 - **执行方式**：按四层架构生成/优化代码，并自动进行代码审查
 - **执行顺序**：
 	1. Entity (实体层) - 必须继承 `TenantEntity`
@@ -2119,19 +2126,19 @@ interface ReviewResult {
 		- 使用 JUnit 5 + Spring Boot Test 框架
 		- 测试业务逻辑方法（CRUD、条件查询、事务回滚）
 		- 使用 `@Transactional` 确保测试后自动回滚
-		- 路径：`src/test/java/org/dromara/<模块名>/service/`
+		- 路径：`src/test/java/org/dromara/business/service/`
 		- 目标覆盖率：90%+ 🆕
 	2. **接口测试**（Controller 层）
 		- 使用 Spring Boot Test + MockMvc
 		- 测试 RESTful 接口（GET/POST/PUT/DELETE）
 		- 验证权限控制、参数校验、返回格式
-		- 路径：`src/test/java/org/dromara/<模块名>/controller/`
+		- 路径：`src/test/java/org/dromara/business/controller/`
 		- 目标覆盖率：85%+ 🆕
 	3. **回归测试套件** 🆕（新增）
 		- 自动生成回归测试基线（首次运行后保存测试结果）
 		- 每次代码变更后自动运行回归测试
 		- 验证核心功能未受影响（防止功能退化）
-		- 路径：`src/test/java/org/dromara/<模块名>/regression/`
+		- 路径：`src/test/java/org/dromara/business/regression/`
 		- 包含内容：
 		  - 核心业务流程测试（端到端测试）
 		  - 历史Bug回归测试（已修复Bug不再出现）
@@ -2141,7 +2148,7 @@ interface ReviewResult {
 	4. **测试数据生成器**（可选）
 		- 自动生成随机测试数据
 		- 支持批量数据生成
-		- 路径：`src/test/java/org/dromara/<模块名>/generator/`
+		- 路径：`src/test/java/org/dromara/business/generator/`
 - **自动化测试执行**：
 	1. **执行测试**：
 		```bash
@@ -2248,7 +2255,7 @@ interface ReviewResult {
 #### 回归测试套件结构
 
 ```
-src/test/java/org/dromara/<模块名>/
+src/test/java/org/dromara/business/
 ├── service/              # 单元测试
 │   └── SportRecordServiceTest.java
 ├── controller/           # 接口测试
@@ -4329,13 +4336,13 @@ EXPLAIN SELECT * FROM sport_record WHERE create_time > '2024-01-01';
 - **执行流程**：
 	- **11.1 智能提交信息生成**（自动化）
 		```
-		AI动作：
+		执行步骤：
 		1. 从步骤10的进度报告中提取：
 		   - 已完成功能
 		   - 代码变更统计
 		   - 质量指标
 		
-		2. 自动生成符合规范的commit message：
+		2. 生成符合规范的commit message：
 		   格式：<type>(<scope>): <subject>
 		   
 		   示例：

@@ -257,9 +257,9 @@ COMMENT ON COLUMN bus_order.order_time IS '下单时间';
 ### 框架核心文件
 - **系统表初始化脚本**（MySQL）：`script/sql/mysql/ry-vue-plus.sql`
 - **系统表初始化脚本**（Oracle）：`script/sql/oracle/ry-vue-plus.sql`
-- **基础实体类**：`ruoyi-common/src/main/java/com/ruoyi/common/core/domain/BaseEntity.java`
+- **基础实体类**：`ruoyi-common/src/main/java/org/dromara/common/core/domain/BaseEntity.java`
   - 作用：定义标准审计字段的 Java 映射
-- **用户实体示例**：`ruoyi-system/src/main/java/com/ruoyi/system/domain/SysUser.java`
+- **用户实体示例**：`ruoyi-system/src/main/java/org/dromara/system/domain/SysUser.java`
   - 作用：参考如何继承 BaseEntity 并定义业务字段
 - **配置文件**：`ruoyi-admin/src/main/resources/application-dev.yml`
   - 作用：读取数据源配置，确定目标数据库类型

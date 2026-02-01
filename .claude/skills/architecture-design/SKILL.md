@@ -284,9 +284,9 @@ mkdir -p ruoyi-modules/ruoyi-business/src/main/resources/mapper/business
 mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
 ```
 
-**步骤2：创建 pom.xml 文件（⭐ 关键）**
+**步骤2：创建 pom.xml 文件（必需）**
 
-在 `ruoyi-modules/ruoyi-business/` 目录下手动创建 `pom.xml` 文件，内容如下:
+使用 Write 工具在 `ruoyi-modules/ruoyi-business/` 目录下创建 `pom.xml` 文件：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -298,36 +298,32 @@ mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
     
     <!-- 声明父模块 -->
     <parent>
-        <groupId>com.ruoyi</groupId>
-        <artifactId>ruoyi</artifactId>
-        <version>5.x.x</version>
+        <groupId>org.dromara</groupId>
+        <artifactId>ruoyi-modules</artifactId>
+        <version>${revision}</version>
     </parent>
-    
-    <!-- 当前模块坐标 -->
-    <artifactId>ruoyi-business</artifactId>
-    <packaging>jar</packaging>
     
     <description>订单管理模块</description>
     
     <dependencies>
         <!-- 依赖通用模块 -->
         <dependency>
-            <groupId>com.ruoyi</groupId>
+            <groupId>org.dromara</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
         
         <!-- 可选：依赖系统模块（如需使用用户/角色等） -->
         <dependency>
-            <groupId>com.ruoyi</groupId>
+            <groupId>org.dromara</groupId>
             <artifactId>ruoyi-system</artifactId>
         </dependency>
     </dependencies>
 </project>
 ```
 
-**步骤3：在父 pom.xml 中注册新模块（⭐ 关键）**
+**步骤3：在父 pom.xml 中注册新模块（必需）**
 
-编辑项目根目录的 `pom.xml`，在 `<modules>` 标签中添加：
+在项目根目录的 `pom.xml` 的 `<modules>` 标签中添加：
 
 ```xml
 <modules>
@@ -340,9 +336,9 @@ mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
 </modules>
 ```
 
-**步骤4：在 ruoyi-admin 中添加模块依赖**
+**步骤4：在 ruoyi-admin 中添加模块依赖（可选）**
 
-编辑 `ruoyi-admin/pom.xml`，添加对新模块的依赖：
+如需在启动模块中使用，在 `ruoyi-admin/pom.xml` 中添加依赖：
 
 ```xml
 <dependencies>
@@ -350,30 +346,17 @@ mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
     
     <!-- ✅ 新增订单模块依赖 -->
     <dependency>
-        <groupId>com.ruoyi</groupId>
+        <groupId>org.dromara</groupId>
         <artifactId>ruoyi-business</artifactId>
     </dependency>
 </dependencies>
 ```
 
-**步骤5：验证模块创建**
+**步骤5：验证模块创建（可选）**
 
 ```bash
-# 刷新 Maven 项目（IDEA 中点击 Maven 面板的刷新按钮）
-mvn clean install
-
-# 验证编译通过
-mvn compile
+mvn clean compile
 ```
-
-**IDE 快速创建（推荐）：**
-
-如果使用 IntelliJ IDEA：
-1. 右键 `ruoyi-modules` 目录 → New → Module
-2. 选择 Maven → Next
-3. 填写 ArtifactId: `ruoyi-business`
-4. IDEA 会自动创建 pom.xml 和目录结构
-5. 手动编辑 pom.xml 添加依赖关系，并创建完整的子目录结构
 
 ---
 
@@ -436,7 +419,7 @@ ruoyi-modules/                       # ⭐ 业务模块统一管理目录
 | Redis缓存配置 | ruoyi-framework | RedisConfig.java |
 | Sa-Token安全配置 | ruoyi-framework | SaTokenConfig.java |
 | 线程池配置 | ruoyi-framework | ThreadPoolConfig.java |
-| 业务特定配置 | 对应业务模块 | OrderPayConfig.java (在ruoyi-order) |
+| 业务特定配置 | ruoyi-business | OrderPayConfig.java (在ruoyi-business) |
 
 **标准配置类示例：**
 
@@ -558,8 +541,8 @@ public class MybatisPlusConfig {
        <artifactId>ruoyi-common</artifactId>
        <dependencies>
            <dependency>
-               <groupId>com.ruoyi</groupId>
-               <artifactId>ruoyi-order</artifactId> <!-- 禁止！ -->
+               <groupId>org.dromara</groupId>
+               <artifactId>ruoyi-business</artifactId> <!-- 禁止！ -->
            </dependency>
        </dependencies>
    </project>
@@ -568,8 +551,8 @@ public class MybatisPlusConfig {
 6. **❌ 禁止循环依赖**
    ```
    ❌ 错误关系：
-   ruoyi-order → ruoyi-inventory
-   ruoyi-inventory → ruoyi-order
+   ruoyi-modules → ruoyi-business
+   ruoyi-business → ruoyi-modules
    
    ✅ 正确方案：
    - 抽取公共接口到 ruoyi-common
@@ -712,8 +695,8 @@ public class MybatisPlusConfig {
 │               └── SysUserVo.java                       # 视图对象 ⭐参考
 │
 ├── ruoyi-modules/                                       # ⭐ 自定义业务模块统一管理目录
-│   ├── ruoyi-order/                                     # 订单模块示例
-│   │   └── src/main/java/org/dromara/order/
+│   ├── ruoyi-business/                                     # 订单模块示例
+│   │   └── src/main/java/org/dromara/business/
 │   │       ├── controller/
 │   │       │   └── OrderController.java                 # 业务模块Controller ⭐参考
 │   │       ├── service/
@@ -728,7 +711,7 @@ public class MybatisPlusConfig {
 │   │           │   └── OrderBo.java
 │   │           └── vo/
 │   │               └── OrderVo.java
-│   └── ruoyi-sport/                                     # 其他业务模块
+│   └──                                                 # 其他业务模块
 │
 └── ruoyi-system/src/main/resources/
     └── mapper/system/
@@ -857,19 +840,19 @@ public class MybatisPlusConfig {
 
 **问题场景：**
 ```
-ruoyi-order（订单模块） 需要调用 ruoyi-inventory（库存模块）
-ruoyi-inventory 也需要调用 ruoyi-order
+ruoyi-business（订单模块） 需要调用 ruoyi-common（库存模块）
+ruoyi-common 也需要调用 ruoyi-business
 ```
 
 **解决方案：**
 
 1. **方案一：抽取公共接口**
    ```
-   创建 ruoyi-trade-api 模块
+   创建 ruoyi-common-api 模块
    ├── IOrderService 接口定义
    ├── IInventoryService 接口定义
    
-   ruoyi-order 和 ruoyi-inventory 都依赖 ruoyi-trade-api
+   ruoyi-business 和 ruoyi-commmon 都依赖 ruoyi-common-api
    ```
 
 2. **方案二：使用Spring事件驱动**
@@ -896,7 +879,7 @@ ruoyi-inventory 也需要调用 ruoyi-order
    }
    ```
 
-### Q2: 自定义模块应该放在哪里？
+### Q2: 业务模块应该放在哪里？
 
 **答案：** 与`ruoyi-system`同级，作为独立的Maven模块
 
@@ -906,9 +889,7 @@ project-root/
 ├── ruoyi-framework/
 ├── ruoyi-common/
 ├── ruoyi-system/
-├── ruoyi-order/          # ✅ 自定义订单模块
-├── ruoyi-inventory/      # ✅ 自定义库存模块
-└── ruoyi-sport/          # ✅ 自定义运动健康模块
+├── ruoyi-business/       # ✅ 业务模块
 ```
 
 ### Q3: 如何在Controller中调用多个Service？

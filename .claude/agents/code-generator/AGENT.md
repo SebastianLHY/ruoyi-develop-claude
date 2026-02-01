@@ -184,6 +184,21 @@ created: 2026-01-29
 ```
 
 **情况2: 新建模块**
+
+**前置检查（强制执行）**：
+```
+检查项：
+1. 模块目录是否存在：ruoyi-modules/ruoyi-[业务名]/
+2. pom.xml 是否存在：ruoyi-modules/ruoyi-[业务名]/pom.xml
+3. 父 pom.xml 是否已注册该模块
+
+处理：
+- 如 pom.xml 不存在 → 立即创建（使用标准模板）
+- 如父 pom.xml 未注册 → 立即添加模块引用
+- 验证通过后才能继续生成代码
+```
+
+**创建模块结构**：
 ```bash
 # 步骤1: 创建标准Maven模块目录结构
 ruoyi-modules/ruoyi-[业务名]/
@@ -203,10 +218,9 @@ ruoyi-modules/ruoyi-[业务名]/
     └── resources/
         └── mapper/      (MyBatis XML)
 
-# 步骤2: 生成模块pom.xml（见模板）
-# 步骤3: 更新父工程pom.xml
-# 步骤4: 验证模块配置
-mvn clean compile
+# 步骤2: 使用 Write 工具创建模块 pom.xml
+# 步骤3: 更新父工程 pom.xml 注册模块
+# 步骤4: 验证配置（可选）
 ```
 
 **3.2 四层架构代码生成**

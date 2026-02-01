@@ -218,10 +218,10 @@ public class SysUserServiceImpl implements ISysUserService {
 - ❌ **禁止在列表接口返回大字段**：如富文本、大 JSON、文件内容等，应在详情接口返回
 
 ## 参考代码
-- 文件路径：`ruoyi-system/src/main/java/com/ruoyi/system/mapper/SysUserMapper.java`
-- 文件路径：`ruoyi-system/src/main/java/com/ruoyi/system/service/ISysUserService.java`
-- 文件路径：`ruoyi-system/src/main/java/com/ruoyi/system/service/impl/SysUserServiceImpl.java`
-- 文件路径：`ruoyi-admin/src/main/java/com/ruoyi/web/controller/system/SysUserController.java`
+- 文件路径：`ruoyi-system/src/main/java/org/dromara/system/mapper/SysUserMapper.java`
+- 文件路径：`ruoyi-system/src/main/java/org/dromara/system/service/ISysUserService.java`
+- 文件路径：`ruoyi-system/src/main/java/org/dromara/system/service/impl/SysUserServiceImpl.java`
+- 文件路径：`ruoyi-admin/src/main/java/org/dromara/web/controller/system/SysUserController.java`
 - 文件路径：`ruoyi-ui/src/views/system/user/index.vue`
 
 ## 检查清单
