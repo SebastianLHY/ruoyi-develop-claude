@@ -1,0 +1,61 @@
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "your_api_key",
+    "ANTHROPIC_BASE_URL": "your_api_url",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "your_model",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "your_model",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "your_model",
+    "ANTHROPIC_MODEL": "your_model",
+    "ANTHROPIC_REASONING_MODEL": "your_model"
+  },
+  "includeCoAuthoredBy": false,
+  "hooks": {
+    "UserPromptSubmit":[
+      {
+        "matcher":"",
+        "hooks":[
+          {
+            "type":"command",
+            "command":"node .claude/hooks/skill-forced-eval.js"
+          }
+        ]
+      }
+    ],
+    "PreToolUse":[
+      {
+        "matcher":"Bash|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/pre-tool-use.js",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "Stop":[
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/stop.js",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "SessionStart":[
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/session-start.js",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  }
+}

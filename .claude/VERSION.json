@@ -1,0 +1,23 @@
+{
+  "current_version": "v1.0.1",
+  "last_updated": "2026-02-01",
+  "version_history": [
+    {
+      "version": "v1.0.1",
+      "date": "2026-02-01",
+      "description": "初始版本发布，包含完整的Java开发命令集、依赖检查、错误码管理、回滚指南等核心功能"
+    }
+  ],
+  "version_files": [
+    ".claude/commands/dev.md",
+    ".claude/commands/README.md",
+    ".claude/commands/TIMEOUT-QUICK-REFERENCE.md",
+    ".claude/commands/optimizations/README.md",
+    ".claude/commands/optimizations/DOC-OUTPUT-RULES.md"
+  ],
+  "update_instructions": {
+    "description": "版本同步机制",
+    "sync_command": "node .claude/scripts/sync-version.js",
+    "manual_update": "修改current_version后运行sync命令"
+  }
+}

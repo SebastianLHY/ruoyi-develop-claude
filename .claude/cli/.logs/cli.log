@@ -1,0 +1,8 @@
+{"timestamp":"2026-01-29T06:08:29.905Z","level":"INFO","message":"Command started","context":{"plugin":"hello-world","args":["test"]}}
+{"timestamp":"2026-01-29T06:08:29.906Z","level":"INFO","message":"Step started","context":{"plugin":"custom-step","context":{"test":true}}}
+{"timestamp":"2026-01-29T06:08:29.907Z","level":"INFO","message":"Agent started","context":{"plugin":"custom-agent","task":"测试任务"}}
+{"timestamp":"2026-01-29T06:08:29.907Z","level":"INFO","message":"Command started","context":{"plugin":"test","args":["test"]}}
+{"timestamp":"2026-01-29T06:08:29.908Z","level":"INFO","message":"Command completed","context":{"plugin":"test","args":["test"],"result":{"success":true}}}
+{"timestamp":"2026-01-29T06:08:29.908Z","level":"INFO","message":"Command completed","context":{"plugin":"hello-world","args":["test"],"result":{"success":true,"message":"Hello, test!"}}}
+{"timestamp":"2026-01-29T06:08:29.910Z","level":"INFO","message":"Agent completed","context":{"plugin":"custom-agent","task":"测试任务","result":{"success":true,"task":"测试任务","response":"任务分析完成。这是一个自定义智能体的响应示例。","model":"claude-3","tokens":150}}}
+{"timestamp":"2026-01-29T06:08:29.911Z","level":"INFO","message":"Execution successful","context":{"plugin":"hello-world","result":{"success":true,"message":"Hello, test!"}}}

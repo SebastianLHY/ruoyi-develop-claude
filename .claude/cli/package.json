@@ -1,0 +1,29 @@
+{
+  "name": "java-development-claude-cli",
+  "version": "2.1.0",
+  "description": "Java Development Claude CLI Tool - 命令行快速启动工具 + 插件系统 + 性能监控",
+  "main": "cli.js",
+  "bin": {
+    "jdc": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js",
+    "test": "node test.js",
+    "test:plugin": "node test-plugin.js",
+    "perf": "node cli.js perf"
+  },
+  "keywords": [
+    "claude",
+    "cli",
+    "java",
+    "development",
+    "automation",
+    "plugin",
+    "extensible"
+  ],
+  "author": "Java Development Claude Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "performance-cli",
+  "version": "1.0.0",
+  "type": "command",
+  "description": "性能分析CLI命令 - 查看和分析性能数据",
+  "author": "Java Development Claude Team",
+  "license": "MIT",
+  "main": "index.js",
+  "enabled": true,
+  "commands": {
+    "perf": {
+      "description": "性能分析工具",
+      "usage": "jdc perf [subcommand] [options]",
+      "subcommands": {
+        "report": "显示性能报告",
+        "bottlenecks": "显示性能瓶颈",
+        "agents": "显示智能体协作统计",
+        "export": "导出性能数据",
+        "clean": "清理旧数据",
+        "reset": "重置所有数据"
+      },
+      "options": {
+        "--limit <N>": "限制结果数量",
+        "--days <N>": "保留天数",
+        "--output <file>": "输出文件路径",
+        "--format <type>": "输出格式 (json/text/html)"
+      }
+    }
+  }
+}

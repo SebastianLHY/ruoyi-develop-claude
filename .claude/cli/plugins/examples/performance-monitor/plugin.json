@@ -1,0 +1,33 @@
+{
+  "name": "performance-monitor",
+  "version": "1.0.0",
+  "type": "hook",
+  "description": "性能监控插件 - 自动监控命令、步骤和智能体的执行性能",
+  "author": "Java Development Claude Team",
+  "license": "MIT",
+  "main": "index.js",
+  "enabled": true,
+  "config": {
+    "enabled": true,
+    "logDir": ".performance",
+    "autoReport": false,
+    "reportInterval": 3600000,
+    "thresholds": {
+      "command": 30000,
+      "step": 60000,
+      "agent": 120000,
+      "plugin": 10000,
+      "hook": 1000
+    }
+  },
+  "hooks": {
+    "before-command": true,
+    "after-command": true,
+    "before-step": true,
+    "after-step": true,
+    "before-agent": true,
+    "after-agent": true,
+    "on-error": true,
+    "on-success": true
+  }
+}

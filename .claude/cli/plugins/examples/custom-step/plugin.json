@@ -1,0 +1,15 @@
+{
+  "name": "custom-step",
+  "version": "1.0.0",
+  "type": "step",
+  "description": "自定义步骤示例插件",
+  "author": "Java Development Claude Team",
+  "license": "MIT",
+  "main": "index.js",
+  "enabled": true,
+  "config": {
+    "checkDependencies": true,
+    "autoBackup": true,
+    "timeout": 30000
+  }
+}

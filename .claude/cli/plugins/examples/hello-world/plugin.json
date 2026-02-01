@@ -1,0 +1,19 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "type": "command",
+  "description": "Hello World示例插件",
+  "author": "Java Development Claude Team",
+  "license": "MIT",
+  "main": "index.js",
+  "enabled": true,
+  "commands": {
+    "hello": {
+      "description": "显示Hello World消息",
+      "usage": "jdc plugin:hello-world [name]",
+      "options": {
+        "--uppercase": "使用大写字母"
+      }
+    }
+  }
+}

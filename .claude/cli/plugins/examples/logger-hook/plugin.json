@@ -1,0 +1,25 @@
+{
+  "name": "logger-hook",
+  "version": "1.0.0",
+  "type": "hook",
+  "description": "日志记录钩子插件",
+  "author": "Java Development Claude Team",
+  "license": "MIT",
+  "main": "index.js",
+  "enabled": true,
+  "config": {
+    "logFile": ".logs/cli.log",
+    "logLevel": "info",
+    "timestamp": true
+  },
+  "hooks": {
+    "before-command": true,
+    "after-command": true,
+    "before-step": true,
+    "after-step": true,
+    "before-agent": true,
+    "after-agent": true,
+    "on-error": true,
+    "on-success": true
+  }
+}
