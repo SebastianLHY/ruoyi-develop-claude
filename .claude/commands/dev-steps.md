@@ -370,20 +370,36 @@
 		- **执行流程**：
 			1. 读取项目模块结构：`ls -R ruoyi-modules`
 			2. 识别现有模块：`ruoyi-system`、`ruoyi-demo`、`ruoyi-generator` 等
-			3. 询问用户模块归属：
+			3. 检查已存在的业务模块
+			4. 询问用户模块归属：
 				```
 				检测到以下现有模块：
 				1. ruoyi-system (系统管理模块)
 				2. ruoyi-demo (示例演示模块)
-				3. [新建模块] ruoyi-business
+				3. [新建模块] ruoyi-business-[业务名] (如 ruoyi-business-order)
 				
 				请选择代码生成位置 [1/2/3]:
 				```
-			4. **情况 A：选择现有模块**
-				- 记录模块路径：`ruoyi-modules/ruoyi-business
-				- 记录包路径：`org.dromara.business`
-			5. **情况 B：新建模块**
-				- 确认模块命名ruoyi-business
+			5. **情况 A：选择现有模块**
+				- 记录模块路径：`ruoyi-modules/ruoyi-business-[业务名]`
+				- 记录包路径：`org.dromara.[业务名]`
+			6. **情况 B：新建模块**
+				- **多模块处理规则**：
+					- 如需创建多个模块，按顺序逐个创建
+					- 完成一个模块后再处理下一个
+					- 避免并行创建导致配置遗漏
+				
+				- **模块命名确认**：
+					```
+					建议模块命名格式：ruoyi-business-[业务名]
+					示例：
+					- ruoyi-business-order (订单模块)
+					- ruoyi-business-inventory (库存模块)
+					- ruoyi-business-health (健康模块)
+					
+					请输入模块名称：
+					```
+				- 确认最终模块名
 				- 规划标准Maven模块目录结构
 				- 记录到设计文档中，在步骤6时创建
 - **⚠️ 重要**: 模块归属确定后，会影响步骤4文档组织、步骤5表名前缀、步骤6代码路径
@@ -1446,7 +1462,7 @@ Token成本:
 			💡 提示：
 			- 同时勾选"生成业务代码"和"生成前端代码"可一次性生成完整功能
 			- 前端代码将自动生成Vue3组件、API调用、路由配置
-			- 生成后AI将分别回查验证后端和前端代码
+			- 生成后分别回查验证后端和前端代码
 			```
 		
 		- **5.5.2 等待用户生成代码（含超时处理）**
@@ -1686,9 +1702,14 @@ Token成本:
 	- **分支B：AI直接生成代码**
 		- **情况 B1：选择现有模块**
 			- 直接在选定模块下生成代码
-			- 路径：`ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/`
+			- 路径：`ruoyi-modules/ruoyi-business-[业务名]/src/main/java/org/dromara/[业务名]/`
 		
 		- **情况 B2：新建模块**
+			- **多模块创建规则**：
+				- 如需创建多个模块，必须逐个完成
+				- 顺序：目录结构 → pom.xml → 父pom注册 → 验证 → 下一个模块
+				- 禁止并行创建，避免配置遗漏
+			
 			- **前置检查（强制执行）**：
 				- 检查模块 pom.xml 是否存在
 				- 如不存在，立即执行步骤1-3创建完整模块结构
@@ -1696,7 +1717,7 @@ Token成本:
 			
 			- **步骤1：创建标准Maven模块目录结构**
 				```
-				ruoyi-modules/ruoyi-<业务名>/
+				ruoyi-modules/ruoyi-business-<业务名>/
 				├── pom.xml
 				└── src/main/
 				    ├── java/org/dromara/<业务名>/
@@ -1728,7 +1749,7 @@ Token成本:
 				        <relativePath>../pom.xml</relativePath>
 				    </parent>
 				    
-				    <artifactId>ruoyi-<业务名></artifactId>
+				    <artifactId>ruoyi-business-<业务名></artifactId>
 				    <description>若依<业务名>模块</description>
 				    
 				    <dependencies>
@@ -1820,7 +1841,7 @@ Token成本:
 				    <module>ruoyi-demo</module>
 				    <module>ruoyi-generator</module>
 				    <!-- 新增模块 -->
-				    <module>ruoyi-<业务名></module>
+				    <module>ruoyi-business-<业务名></module>
 				</modules>
 				```
 			
@@ -1830,7 +1851,7 @@ Token成本:
 				```
 	
 	- **模块完整性自检**：
-		- 确认 `ruoyi-modules/ruoyi-<业务名>/pom.xml` 已创建
+		- 确认 `ruoyi-modules/ruoyi-business-<业务名>/pom.xml` 已创建
 		- 确认父 pom.xml 已注册模块
 		- 如有缺失，立即补充创建
 

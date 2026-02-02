@@ -262,7 +262,19 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
 **场景：** 新增独立业务模块
 
-统一在用ruoyi-modules下新增业务模块，统一用`ruoyi-business`
+**模块命名规范**：
+- 所有自定义业务模块统一放在 `ruoyi-modules` 目录下
+- **推荐命名格式**：`ruoyi-business-[业务名]`（如 `ruoyi-business-order`、`ruoyi-business-inventory`）
+- 如用户有特殊要求，可使用自定义模块名
+
+**命名确认流程**：
+```
+创建新模块时：
+1. 检查项目中已存在的业务模块
+2. 建议使用 ruoyi-business-[业务名] 格式保持一致性
+3. 提供命名示例供用户参考
+4. 确认最终模块名后执行创建流程
+```
 
 ---
 
@@ -271,22 +283,22 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 **步骤1：创建模块目录结构**
 
 ```bash
-# 1.1 在 ruoyi-modules 目录下创建模块文件夹（⭐ 所有自定义业务模块必须放在 ruoyi-modules 下）
-mkdir -p ruoyi-modules/ruoyi-business
+# 1.1 在 ruoyi-modules 目录下创建模块文件夹（所有自定义业务模块必须放在 ruoyi-modules 下）
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]
 
 # 1.2 创建标准 Maven 目录结构（包含所有必要的子目录）
-mkdir -p ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/controller
-mkdir -p ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/service/impl
-mkdir -p ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/mapper
-mkdir -p ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/domain/bo
-mkdir -p ruoyi-modules/ruoyi-business/src/main/java/org/dromara/business/domain/vo
-mkdir -p ruoyi-modules/ruoyi-business/src/main/resources/mapper/business
-mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/main/java/org/dromara/[业务名]/controller
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/main/java/org/dromara/[业务名]/service/impl
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/main/java/org/dromara/[业务名]/mapper
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/main/java/org/dromara/[业务名]/domain/bo
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/main/java/org/dromara/[业务名]/domain/vo
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/main/resources/mapper/[业务名]
+mkdir -p ruoyi-modules/ruoyi-business-[业务名]/src/test/java/org/dromara/[业务名]
 ```
 
 **步骤2：创建 pom.xml 文件（必需）**
 
-使用 Write 工具在 `ruoyi-modules/ruoyi-business/` 目录下创建 `pom.xml` 文件：
+使用 Write 工具在 `ruoyi-modules/ruoyi-business-[业务名]/` 目录下创建 `pom.xml` 文件：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -302,7 +314,9 @@ mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
         <artifactId>ruoyi-modules</artifactId>
         <version>${revision}</version>
     </parent>
-    
+
+    <artifactId>ruoyi-business-[业务名]</artifactId>
+
     <description>订单管理模块</description>
     
     <dependencies>
@@ -332,7 +346,7 @@ mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
     <module>ruoyi-system</module>
     <module>ruoyi-common</module>
     <!-- ✅ 新增模块（注意路径包含 ruoyi-modules）-->
-    <module>ruoyi-modules/ruoyi-business</module>
+    <module>ruoyi-modules/ruoyi-business-[业务名]</module>
 </modules>
 ```
 
@@ -347,7 +361,7 @@ mkdir -p ruoyi-modules/ruoyi-business/src/test/java/org/dromara/business
     <!-- ✅ 新增订单模块依赖 -->
     <dependency>
         <groupId>org.dromara</groupId>
-        <artifactId>ruoyi-business</artifactId>
+        <artifactId>ruoyi-business-[业务名]</artifactId>
     </dependency>
 </dependencies>
 ```
@@ -362,10 +376,10 @@ mvn clean compile
 
 **最终标准结构：**
 ```
-ruoyi-modules/                       # ⭐ 业务模块统一管理目录
-└── ruoyi-business/
-    ├── pom.xml                      # ✅ 声明依赖ruoyi-common和ruoyi-system
-    ├── src/main/java/org/dromara/business/
+ruoyi-modules/                       # 业务模块统一管理目录
+└── ruoyi-business-[业务名]/
+    ├── pom.xml                      # 声明依赖ruoyi-common和ruoyi-system
+    ├── src/main/java/org/dromara/[业务名]/
     │   ├── controller/              # Controller层
     │   │   └── [具体业务]Controller.java
     │   ├── service/                 # Service接口
@@ -419,7 +433,7 @@ ruoyi-modules/                       # ⭐ 业务模块统一管理目录
 | Redis缓存配置 | ruoyi-framework | RedisConfig.java |
 | Sa-Token安全配置 | ruoyi-framework | SaTokenConfig.java |
 | 线程池配置 | ruoyi-framework | ThreadPoolConfig.java |
-| 业务特定配置 | ruoyi-business | OrderPayConfig.java (在ruoyi-business) |
+| 业务特定配置 | ruoyi-business-[业务名] | OrderPayConfig.java |
 
 **标准配置类示例：**
 
@@ -542,7 +556,7 @@ public class MybatisPlusConfig {
        <dependencies>
            <dependency>
                <groupId>org.dromara</groupId>
-               <artifactId>ruoyi-business</artifactId> <!-- 禁止！ -->
+               <artifactId>ruoyi-business-[业务名]</artifactId> <!-- 禁止！ -->
            </dependency>
        </dependencies>
    </project>
@@ -551,8 +565,8 @@ public class MybatisPlusConfig {
 6. **❌ 禁止循环依赖**
    ```
    ❌ 错误关系：
-   ruoyi-modules → ruoyi-business
-   ruoyi-business → ruoyi-modules
+   ruoyi-modules → ruoyi-business-[业务名]
+   ruoyi-business-[业务名] → ruoyi-modules
    
    ✅ 正确方案：
    - 抽取公共接口到 ruoyi-common
@@ -694,9 +708,9 @@ public class MybatisPlusConfig {
 │           └── vo/
 │               └── SysUserVo.java                       # 视图对象 ⭐参考
 │
-├── ruoyi-modules/                                       # ⭐ 自定义业务模块统一管理目录
-│   ├── ruoyi-business/                                     # 订单模块示例
-│   │   └── src/main/java/org/dromara/business/
+├── ruoyi-modules/                                       # 自定义业务模块统一管理目录
+│   ├── ruoyi-business-order/                               # 订单模块示例
+│   │   └── src/main/java/org/dromara/order/
 │   │       ├── controller/
 │   │       │   └── OrderController.java                 # 业务模块Controller ⭐参考
 │   │       ├── service/
@@ -840,8 +854,8 @@ public class MybatisPlusConfig {
 
 **问题场景：**
 ```
-ruoyi-business（订单模块） 需要调用 ruoyi-common（库存模块）
-ruoyi-common 也需要调用 ruoyi-business
+ruoyi-business-order（订单模块） 需要调用 ruoyi-business-inventory（库存模块）
+ruoyi-business-inventory 也需要调用 ruoyi-business-order
 ```
 
 **解决方案：**
@@ -852,7 +866,7 @@ ruoyi-common 也需要调用 ruoyi-business
    ├── IOrderService 接口定义
    ├── IInventoryService 接口定义
    
-   ruoyi-business 和 ruoyi-commmon 都依赖 ruoyi-common-api
+   ruoyi-business-order 和 ruoyi-business-inventory 都依赖 ruoyi-common-api
    ```
 
 2. **方案二：使用Spring事件驱动**
@@ -889,7 +903,7 @@ project-root/
 ├── ruoyi-framework/
 ├── ruoyi-common/
 ├── ruoyi-system/
-├── ruoyi-business/       # ✅ 业务模块
+├── ruoyi-business-[业务名]/       # 业务模块
 ```
 
 ### Q3: 如何在Controller中调用多个Service？
