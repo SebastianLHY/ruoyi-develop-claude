@@ -170,4 +170,19 @@ if (suggestions.length > 0){
     console.log(JSON.stringify(output));
 }
 
+// 清理解密文件
+const cleanupScript = path.join(process.cwd(), '.claude', 'hooks', 'cleanup-decrypted.js');
+if (fs.existsSync(cleanupScript)) {
+    try {
+        // 静默执行清理脚本
+        execSync(`node "${cleanupScript}"`, { 
+            encoding: 'utf8', 
+            stdio: 'ignore',
+            cwd: process.cwd() 
+        });
+    } catch (err) {
+        // 清理失败不影响主流程
+    }
+}
+
 process.exit(0);

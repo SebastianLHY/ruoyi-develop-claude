@@ -1,12 +1,12 @@
 {
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "your_api_key",
-    "ANTHROPIC_BASE_URL": "your_api_url",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "your_model",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "your_model",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "your_model",
-    "ANTHROPIC_MODEL": "your_model",
-    "ANTHROPIC_REASONING_MODEL": "your_model"
+    "ANTHROPIC_AUTH_TOKEN": "82ccf9fc75a44c27bee7d24b40e24bce.Lx7gvCb8RA1fCYp1",
+    "ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.7",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.7",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.7",
+    "ANTHROPIC_MODEL": "glm-4.7",
+    "ANTHROPIC_REASONING_MODEL": "glm-4.7"
   },
   "includeCoAuthoredBy": false,
   "hooks": {

@@ -1,12 +1,33 @@
 #!/usr/bin/env node
 	/**
 	 *  SessionStart Hook - 会话启动时字段加载项目状态
-	 *  功能：检查并加载项目进度、Git状态、待办事项
+	 *  功能：检查并加载项目进度、Git状态、待办事项、自动解密加密文件
 	 */
 	const fs = require('fs');
 	const path = require('path');
 	const { execSync } = require('child_process');
 	const projectRoot = process.cwd();
+
+// 自动解密加密文件
+function autoDecryptFiles() {
+    const decodeScript = path.join(projectRoot, '.claude', 'hooks', 'decode-on-start.js');
+    if (fs.existsSync(decodeScript)) {
+        try {
+            // 静默执行解密脚本(不显示输出,避免干扰)
+            execSync(`node "${decodeScript}"`, { 
+                encoding: 'utf8', 
+                stdio: 'ignore',
+                cwd: projectRoot 
+            });
+        } catch (err) {
+            // 解密失败不影响会话启动
+            console.error('⚠️ 文件解密失败,可能影响skills/agents加载');
+        }
+    }
+}
+
+// 在所有操作前先解密文件
+autoDecryptFiles();
 	// 辅助函数：安全执行命令
 	function safeExec(cmd) {
 	    try {
